@@ -24,10 +24,10 @@
 進階與注意事項
 - 無法在特殊頁面（如 chrome://、擴充功能頁、Chrome Web Store）運行內容腳本。
 - 部分網站可能使用防盜鏈或需要驗證，若直接下載失敗，擴充會嘗試透過 fetch 取得資源再下載；若仍失敗，可能是伺服器限制或跨域問題。
-- 如果你需要：使用原始檔名、將圖片 ZIP 打包後下載、或新增更多語言及樣式，我可以幫你擴充。
 
 Debug / 測試
 - 若下載有問題，打開 chrome://extensions 找到擴充功能，點「Service worker (Inspect)」可檢視 background 的 console 訊息；popup 也可右鍵 Inspect 查看即時訊息。
+
 
 
 
