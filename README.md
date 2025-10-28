@@ -1,4 +1,4 @@
-#ICE-imagedownload_chrome_extension (使用說明 — 中文)
+##ICE-imagedownload_chrome_extension (使用說明 — 中文)
 
 這個 Chrome 擴充功能可以掃描目前分頁中符合條件的大圖（包含 `<img>` 與 CSS background-image），並把選取的圖片下載到本機。主要特色：
 
@@ -28,6 +28,7 @@
 
 Debug / 測試
 - 若下載有問題，打開 chrome://extensions 找到擴充功能，點「Service worker (Inspect)」可檢視 background 的 console 訊息；popup 也可右鍵 Inspect 查看即時訊息。
+
 
 
 
