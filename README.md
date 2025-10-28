@@ -29,7 +29,4 @@
 Debug / 測試
 - 若下載有問題，打開 chrome://extensions 找到擴充功能，點「Service worker (Inspect)」可檢視 background 的 console 訊息；popup 也可右鍵 Inspect 查看即時訊息。
 
-要我做的下一步（建議）
-- 幫你把介面調整得更漂亮（例如使用小框架或 CSS），或把語系改為 Chrome 官方 `_locales` 機制。
 
-謝謝，若要我把 README 翻成英文或加入更多操作範例我也可以做。
