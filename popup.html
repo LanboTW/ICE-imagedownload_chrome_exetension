@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Download Large Images</title>
+    <style>
+      body { font-family: Arial, sans-serif; width: 260px; padding: 12px; }
+      button { width: 100%; padding: 8px; font-size: 14px; }
+      #status { margin-top: 8px; font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="top" style="display:grid; grid-template-columns: auto 1fr; gap:8px; align-items:center;">
+        <div class="lang" style="display:flex; flex-direction: column ; align-items:center; gap:3px; margin-bottom: 5px;">
+          <img id="langIcon" src="translate_icon.png" alt="lang" style="width:60px;height:60px;display:inline-block;" />
+          <select id="lang" aria-label="Language" style="width:100px;height:20px;display:inline-block;">
+            <option value="zh-TW">中文 (繁體)</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <div class="run"><button id="run">掃描並顯示可下載的圖片</button></div>
+      </div>
+
+      <div id="sizeFilters" style="display:grid; grid-template-columns: repeat(4, auto); gap:8px; align-items:center;">
+        <label style="font-size:12px;">寬</label>
+        <input id="minWidth" type="number" placeholder="最小" min="0" style="width:80px; padding:4px; margin-top:2px;" />
+        <span style="font-size:12px;">~</span>
+        <input id="maxWidth" type="number" placeholder="最大" min="0" style="width:80px; padding:4px;" />
+
+        <label style="font-size:12px;">高</label>
+        <input id="minHeight" type="number" placeholder="最小" min="0" style="width:80px; padding:4px;" />
+        <span style="font-size:12px;">~</span>
+        <input id="maxHeight" type="number" placeholder="最大" min="0" style="width:80px; padding:4px;" />
+
+        <div id="filterSummary" style="grid-column:1 / -1; font-size:12px; color:#333;">過濾：無</div>
+      </div>
+    <div id="controls" style="display:grid; grid-template-columns: repeat(2, auto); gap:8px; align-items:center;">
+      <button id="selectAll">全選</button>
+      <button id="deselectAll">取消全選</button>
+      <button id="downloadSelected">下載選取</button>
+      <button id="downloadAll">全部下載</button>
+    </div>
+    <div id="status"></div>
+    <div id="list" style="margin-top:8px; max-height:300px; overflow:auto; display:none; border:1px solid #ddd; padding:6px;"></div>
+    <script src="popup.js"></script>
+  </body>
+</html>
