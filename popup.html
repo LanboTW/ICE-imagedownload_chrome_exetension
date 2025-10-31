@@ -24,15 +24,15 @@
       </div>
 
       <div id="sizeFilters" style="display:grid; grid-template-columns: repeat(4, auto); gap:8px; align-items:center;">
-        <label style="font-size:12px;">寬</label>
-        <input id="minWidth" type="number" placeholder="最小" min="0" style="width:80px; padding:4px; margin-top:2px;" />
-        <span style="font-size:12px;">~</span>
-        <input id="maxWidth" type="number" placeholder="最大" min="0" style="width:80px; padding:4px;" />
+  <label id="labelWidth" style="font-size:12px;">寬</label>
+  <input id="minWidth" type="number" placeholder="最小" min="0" style="width:80px; padding:4px; margin-top:2px;" />
+  <span class="tilde" style="font-size:12px;">~</span>
+  <input id="maxWidth" type="number" placeholder="最大" min="0" style="width:80px; padding:4px;" />
 
-        <label style="font-size:12px;">高</label>
-        <input id="minHeight" type="number" placeholder="最小" min="0" style="width:80px; padding:4px;" />
-        <span style="font-size:12px;">~</span>
-        <input id="maxHeight" type="number" placeholder="最大" min="0" style="width:80px; padding:4px;" />
+  <label id="labelHeight" style="font-size:12px;">高</label>
+  <input id="minHeight" type="number" placeholder="最小" min="0" style="width:80px; padding:4px;" />
+  <span class="tilde" style="font-size:12px;">~</span>
+  <input id="maxHeight" type="number" placeholder="最大" min="0" style="width:80px; padding:4px;" />
 
         <div id="filterSummary" style="grid-column:1 / -1; font-size:12px; color:#333;">過濾：無</div>
       </div>

@@ -8,6 +8,11 @@ let lastTitle = '';
 const TRANSLATIONS = {
   'zh-TW': {
     run: '掃描並顯示可下載的圖片',
+    width_label: '寬',
+    height_label: '高',
+    min_placeholder: '最小',
+    max_placeholder: '最大',
+    tilde: '~',
     selectAll: '全選',
     deselectAll: '取消全選',
     downloadSelected: '下載選取',
@@ -17,6 +22,8 @@ const TRANSLATIONS = {
     cannot_access: '無法存取此分頁的內容（例如 chrome:// 或未注入內容腳本）。',
     found_count: '已找到 ${count} 張符合條件的圖片，請從下方選擇或按全部下載',
     processing_error: '處理時發生錯誤: ${err}',
+  width_min_gt_max: '寬度的最小值不能大於最大值',
+  height_min_gt_max: '高度的最小值不能大於最大值',
     start_download: '開始下載 ${total} 張圖片...',
     download_progress: '下載中：已完成 ${completed} / ${total}',
     download_done: '下載完成：共 ${completed} / ${total} 張（可能有失敗）。',
@@ -26,9 +33,16 @@ const TRANSLATIONS = {
     select_one_alert: '請先選擇至少一張圖片'
     ,
     filter_summary: '過濾：${w}，${h}'
+    ,
+    none: '無'
   },
   'en': {
     run: 'Scan and show downloadable images',
+    width_label: 'Width',
+    height_label: 'Height',
+    min_placeholder: 'min',
+    max_placeholder: 'max',
+    tilde: '~',
     selectAll: 'Select all',
     deselectAll: 'Deselect all',
     downloadSelected: 'Download selected',
@@ -38,6 +52,8 @@ const TRANSLATIONS = {
     cannot_access: 'Cannot access this page (e.g. chrome:// or content script not injected).',
     found_count: 'Found ${count} images that match; please select or press Download All',
     processing_error: 'Error while processing: ${err}',
+  width_min_gt_max: 'Min width cannot be greater than max width',
+  height_min_gt_max: 'Min height cannot be greater than max height',
     start_download: 'Starting download of ${total} images...',
     download_progress: 'Downloading: ${completed} / ${total}',
     download_done: 'Download finished: ${completed} / ${total} images (some may have failed).',
@@ -47,8 +63,11 @@ const TRANSLATIONS = {
     select_one_alert: 'Please select at least one image'
     ,
     filter_summary: 'Filter: ${w}, ${h}'
+    ,
+    none: 'none'
   }
 };
+
 
 let CURRENT_LANG = 'zh-TW';
 
@@ -173,8 +192,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateFilterSummary() {
     const f = getFilterFromUI();
-    const w = (f.minWidth === undefined && f.maxWidth === undefined) ? '寬：無' : `寬：${f.minWidth === undefined ? '' : f.minWidth}${(f.minWidth!==undefined && f.maxWidth!==undefined)?'~':''}${f.maxWidth===undefined?'':f.maxWidth}`;
-    const h = (f.minHeight === undefined && f.maxHeight === undefined) ? '高：無' : `高：${f.minHeight === undefined ? '' : f.minHeight}${(f.minHeight!==undefined && f.maxHeight!==undefined)?'~':''}${f.maxHeight===undefined?'':f.maxHeight}`;
+    // build localized width/height summary
+    const wl = t('width_label');
+    const hl = t('height_label');
+    const noneText = t('none');
+    const til = t('tilde');
+    const buildRange = (min, max) => {
+      if (min === undefined && max === undefined) return noneText;
+      if (min === undefined) return `${max}`;
+      if (max === undefined) return `${min}`;
+      return `${min}${til}${max}`;
+    };
+    const w = `${wl}：${buildRange(f.minWidth, f.maxWidth)}`;
+    const h = `${hl}：${buildRange(f.minHeight, f.maxHeight)}`;
     if (filterSummaryEl) filterSummaryEl.textContent = t('filter_summary', {w, h});
   }
 
@@ -210,12 +240,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // validate: if both min and max provided for width/height, ensure min <= max
       if (filter.minWidth !== undefined && filter.maxWidth !== undefined && filter.minWidth > filter.maxWidth) {
-        alert('寬度的最小值不能大於最大值');
+        alert(t('width_min_gt_max'));
         status.textContent = '';
         return;
       }
       if (filter.minHeight !== undefined && filter.maxHeight !== undefined && filter.minHeight > filter.maxHeight) {
-        alert('高度的最小值不能大於最大值');
+        alert(t('height_min_gt_max'));
         status.textContent = '';
         return;
       }
@@ -360,10 +390,26 @@ function applyTranslations() {
     const deselectAll = document.getElementById('deselectAll');
     const downloadSelected = document.getElementById('downloadSelected');
     const downloadAll = document.getElementById('downloadAll');
+    const labelW = document.getElementById('labelWidth');
+    const labelH = document.getElementById('labelHeight');
+    const minW = document.getElementById('minWidth');
+    const maxW = document.getElementById('maxWidth');
+    const minH = document.getElementById('minHeight');
+    const maxH = document.getElementById('maxHeight');
+    const tildes = document.querySelectorAll('.tilde');
     if (btn) btn.textContent = t('run');
     if (selectAll) selectAll.textContent = t('selectAll');
     if (deselectAll) deselectAll.textContent = t('deselectAll');
     if (downloadSelected) downloadSelected.textContent = t('downloadSelected');
     if (downloadAll) downloadAll.textContent = t('downloadAll');
+    if (labelW) labelW.textContent = t('width_label');
+    if (labelH) labelH.textContent = t('height_label');
+    if (minW) minW.placeholder = t('min_placeholder');
+    if (maxW) maxW.placeholder = t('max_placeholder');
+    if (minH) minH.placeholder = t('min_placeholder');
+    if (maxH) maxH.placeholder = t('max_placeholder');
+    if (tildes && tildes.length) tildes.forEach(s => s.textContent = t('tilde'));
+    // refresh filter summary (so it uses the current language)
+    try { updateFilterSummary(); } catch (e) { }
   } catch (e) { console.error('applyTranslations error', e); }
 }
